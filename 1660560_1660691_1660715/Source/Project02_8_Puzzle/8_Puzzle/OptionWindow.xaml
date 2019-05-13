@@ -1,0 +1,27 @@
+﻿<Window x:Class="_8_Puzzle.OptionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_8_Puzzle"
+        mc:Ignorable="d"
+        Icon="Resource/puzzle.ico"
+        Title="Choose option" Height="219.925" Width="300" WindowStartupLocation="CenterScreen">
+    <Canvas>
+        <GroupBox Width="272" Height="116" Canvas.Left="8" Canvas.Top="10" Header="Option">
+            <GroupItem>
+                <StackPanel Height="102">
+                    <RadioButton Name="easyOption" 
+                    Content="Easy" Margin="70 20 20 0" Canvas.Left="100" IsChecked="True" FontFamily="verdana"/>
+                    <RadioButton Name="mediumOption" 
+                    Content="Medium" Margin="70 10 20 10" Canvas.Top="74" Canvas.Left="100" FontFamily="verdana"/>
+                    <RadioButton Name="hardOption" 
+                    Content="Hard" Margin="70 0 20 10" Canvas.Top="104" Canvas.Left="100" FontFamily="verdana"/>
+                </StackPanel>
+            </GroupItem>
+        </GroupBox>
+        <Button Name="OKButton"
+                Click="OKButton_Click" 
+                Content="OK" Width="65" Canvas.Top="139" Canvas.Left="112" Background="WhiteSmoke" Height="29"/>
+    </Canvas>
+</Window>

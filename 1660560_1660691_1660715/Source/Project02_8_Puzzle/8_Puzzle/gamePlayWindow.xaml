@@ -1,0 +1,61 @@
+﻿<Window x:Class="_8_Puzzle.gamePlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_8_Puzzle"
+        mc:Ignorable="d"
+        Icon="Resource/puzzle.ico"
+        Title="8 Puzzle - Play game" Height="554.511" Width="800" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ToolBarTray>
+            <ToolBar>
+                <Button Name="backButton" Click="backButton_Click" ToolTip="Back">
+                    <Image Source="Resource/back.png" Height="24" Width="24"/>
+                </Button>
+                <Button Margin="10 0 0 0" ToolTip="Save">
+                    <Image Source="Resource/save.png" Height="24" Width="24"/>
+                </Button>
+                <Button Margin="10 0 0 0" ToolTip="Help">
+                    <Image Source="Resource/help.png" Height="24" Width="24"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Canvas Name="board" Height="350" Margin="25 -30 25 0"></Canvas>
+        <Button Name="startButton"
+                Height="40" Width="120" FontSize="20" Margin="0 400 0 0">Start</Button>
+        <StackPanel Grid.Column="1">
+            <Image Source="Resource/stopwatch.png" Height="42" Width="42" Margin="0 20 0 0"/>
+            <Label Name="timeLabel"
+                   Content="03:00" FontSize="30" FontWeight="bold" FontFamily="verdana" Foreground="DarkRed" HorizontalAlignment="Center" Margin="0 0 0 10"/>
+            <Image Name="sampleImage" Source="Resource/bg1.jpg" 
+                   Height="200" Width="200"/>
+            <Button Name="changeImageButton"
+                    Click="changeImageButton_Click"
+                    Width="50" Margin="0 10 0 10">Change</Button>
+            <Canvas>
+                <Label Name="stepLabel" Content="Steps: 0" FontSize="20" Canvas.Left="16" Canvas.Top="23"/>
+                <Button Name="upButton"
+                        Height="30" Width="30" Canvas.Top="30" Canvas.Left="300">
+                    ▲
+                </Button>
+                <Button Name="downButton"
+                        Height="30" Width="30" Canvas.Top="100" Canvas.Left="300">
+                    ▼
+                </Button>
+                <Button Name="leftButton"
+                        Height="30" Width="30" Canvas.Top="65" Canvas.Left="262">
+                    ◀
+                </Button>
+                <Button Name="rightButton"
+                        Height="30" Width="30" Canvas.Top="65" Canvas.Left="338">
+                    ▶
+                </Button>
+            </Canvas>
+        </StackPanel>
+    </Grid>
+</Window>

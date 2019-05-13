@@ -1,0 +1,31 @@
+﻿<Window x:Class="_8_Puzzle.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_8_Puzzle"
+        mc:Ignorable="d"
+        Icon="Resource/puzzle.ico"
+        Title="8 Puzzle" Height="500" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush TileMode="None">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="Resource/bg1.jpg"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
+    </Window.Background>
+    <Canvas>
+        <Button Name="newGameButton"
+                Click="newGameButton_Click"
+                Content="New game" Height="50" Width="334" Canvas.Left="224" Canvas.Top="152"
+                BorderThickness="0" FontSize="22" FontWeight="bold" Opacity="0.8" Background="WhiteSmoke" FontFamily="Verdana"/>
+        <Button Name="optionButton"
+                Click="optionButton_Click"
+                Content="Option" Height="50" Width="334" Canvas.Left="224" Canvas.Top="219"
+                BorderThickness="0" FontSize="22" FontWeight="bold" Opacity="0.8" Background="WhiteSmoke" FontFamily="Verdana"/>
+        <Button Name="exitButton"
+                Click="exitButton_Click"
+                Content="Exit" Height="50" Width="334" Canvas.Left="224" Canvas.Top="283"
+                BorderThickness="0" FontSize="22" FontWeight="bold" Opacity="0.8" Background="WhiteSmoke" FontFamily="Verdana"/>
+    </Canvas>
+</Window>
