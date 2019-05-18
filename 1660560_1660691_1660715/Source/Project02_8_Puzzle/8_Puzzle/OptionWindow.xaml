@@ -5,23 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_8_Puzzle"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Icon="Resource/puzzle.ico"
-        Title="Choose option" Height="219.925" Width="300" WindowStartupLocation="CenterScreen">
-    <Canvas>
-        <GroupBox Width="272" Height="116" Canvas.Left="8" Canvas.Top="10" Header="Option">
+        Title="Option" Height="219.925" Width="300" WindowStartupLocation="CenterScreen">
+    <Canvas Background="#222">
+        <GroupBox Width="272" Height="116" Canvas.Left="8" Canvas.Top="10" Header="Customize level:" Foreground="silver" BorderThickness="0">
             <GroupItem>
                 <StackPanel Height="102">
                     <RadioButton Name="easyOption" 
-                    Content="Easy" Margin="70 20 20 0" Canvas.Left="100" IsChecked="True" FontFamily="verdana"/>
+                    Content="Easy" Margin="70 20 20 0" Canvas.Left="100" IsChecked="True" FontFamily="verdana" Foreground="silver"/>
                     <RadioButton Name="mediumOption" 
-                    Content="Medium" Margin="70 10 20 10" Canvas.Top="74" Canvas.Left="100" FontFamily="verdana"/>
+                    Content="Medium" Margin="70 10 20 10" Canvas.Top="74" Canvas.Left="100" FontFamily="verdana" Foreground="silver"/>
                     <RadioButton Name="hardOption" 
-                    Content="Hard" Margin="70 0 20 10" Canvas.Top="104" Canvas.Left="100" FontFamily="verdana"/>
+                    Content="Hard" Margin="70 0 20 10" Canvas.Top="104" Canvas.Left="100" FontFamily="verdana" Foreground="silver"/>
                 </StackPanel>
             </GroupItem>
         </GroupBox>
         <Button Name="OKButton"
                 Click="OKButton_Click" 
-                Content="OK" Width="65" Canvas.Top="139" Canvas.Left="112" Background="WhiteSmoke" Height="29"/>
+                Content="OK"
+                Background="#222" Foreground="silver" 
+                Width="65" Canvas.Top="139" Canvas.Left="112" Height="29"/>
     </Canvas>
 </Window>

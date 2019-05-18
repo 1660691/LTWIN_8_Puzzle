@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:_8_Puzzle"
         mc:Ignorable="d"
         Icon="Resource/puzzle.ico"
+        ResizeMode="NoResize"
         Title="Image storage" Height="400" Width="300" WindowStartupLocation="CenterScreen">
-    <Canvas>
-        <ListView Name="imageListView"
+    <Canvas Background="#222">
+        <ListView Name="imageListView" Background="#222"
                   SelectionChanged="imageListView_SelectionChanged"
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   ScrollViewer.CanContentScroll="False"
                   Height="360" Width="290">
-
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

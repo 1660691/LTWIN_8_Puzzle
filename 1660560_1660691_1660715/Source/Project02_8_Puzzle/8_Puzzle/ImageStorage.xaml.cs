@@ -24,6 +24,7 @@ namespace _8_Puzzle
     public partial class ImageStorage : Window
     {
         public string SampleImageSource = null;
+        public int steps = 0;
 
         public ImageStorage()
         {

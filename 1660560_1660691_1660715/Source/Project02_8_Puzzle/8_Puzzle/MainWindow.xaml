@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:_8_Puzzle"
         mc:Ignorable="d"
         Icon="Resource/puzzle.ico"
+        ResizeMode="NoResize"
         Title="8 Puzzle" Height="500" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Background>
         <ImageBrush TileMode="None">
@@ -18,14 +19,14 @@
         <Button Name="newGameButton"
                 Click="newGameButton_Click"
                 Content="New game" Height="50" Width="334" Canvas.Left="224" Canvas.Top="152"
-                BorderThickness="0" FontSize="22" FontWeight="bold" Opacity="0.8" Background="WhiteSmoke" FontFamily="Verdana"/>
+                BorderThickness="0" FontSize="22" FontWeight="bold" Background="#222" FontFamily="Verdana" Foreground="white" Opacity="0.8"/>
         <Button Name="optionButton"
                 Click="optionButton_Click"
-                Content="Option" Height="50" Width="334" Canvas.Left="224" Canvas.Top="219"
-                BorderThickness="0" FontSize="22" FontWeight="bold" Opacity="0.8" Background="WhiteSmoke" FontFamily="Verdana"/>
+                Content="Options" Height="50" Width="334" Canvas.Left="224" Canvas.Top="219"
+                BorderThickness="0" FontSize="22" FontWeight="bold" Background="#222" FontFamily="Verdana" Foreground="white" Opacity="0.8"/>
         <Button Name="exitButton"
                 Click="exitButton_Click"
                 Content="Exit" Height="50" Width="334" Canvas.Left="224" Canvas.Top="283"
-                BorderThickness="0" FontSize="22" FontWeight="bold" Opacity="0.8" Background="WhiteSmoke" FontFamily="Verdana"/>
+                BorderThickness="0" FontSize="22" FontWeight="bold" Background="#222" FontFamily="Verdana" Foreground="white" Opacity="0.8"/>
     </Canvas>
 </Window>

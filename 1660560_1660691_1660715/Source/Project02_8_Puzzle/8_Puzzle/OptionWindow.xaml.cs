@@ -19,13 +19,28 @@ namespace _8_Puzzle
     /// </summary>
     public partial class OptionWindow : Window
     {
+        public string level;
         public OptionWindow()
         {
             InitializeComponent();
+
+            easyOption.IsChecked = true;
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            if(easyOption.IsChecked == true)
+            {
+                level = "easy";
+            }
+            else if(mediumOption.IsChecked == true)
+            {
+                level = "medium";
+            }
+            else
+            {
+                level = "hard";
+            }
             this.DialogResult = true;
         }
     }

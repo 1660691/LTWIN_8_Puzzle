@@ -20,14 +20,17 @@ namespace _8_Puzzle
     /// </summary>
     public partial class MainWindow : Window
     {
+        string level;
+
         public MainWindow()
         {
             InitializeComponent();
+            level = "easy";
         }
 
         private void newGameButton_Click(object sender, RoutedEventArgs e)
         {
-            var screen = new gamePlayWindow();
+            var screen = new gamePlayWindow(level);
             this.Hide();
             screen.ShowDialog();
             this.Close();
@@ -37,11 +40,16 @@ namespace _8_Puzzle
         {
             var screen = new OptionWindow();
             screen.ShowDialog();
+            
+            if(screen.DialogResult == true)
+            {
+                level = screen.level;
+            }
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Do you want to exit?", "Exit game",MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            if (MessageBox.Show("Exit game?", "",MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                 return;
             this.Close();
         }
