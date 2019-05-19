@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Icon="Resource/puzzle.ico"
         ResizeMode="NoResize"
-        Title="8 Puzzle" Height="500" Width="800" WindowStartupLocation="CenterScreen">
+        Title="8 Puzzle" Height="500" Width="800" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Window.Background>
         <ImageBrush TileMode="None">
             <ImageBrush.ImageSource>
@@ -20,9 +20,9 @@
                 Click="newGameButton_Click"
                 Content="New game" Height="50" Width="334" Canvas.Left="224" Canvas.Top="152"
                 BorderThickness="0" FontSize="22" FontWeight="bold" Background="#222" FontFamily="Verdana" Foreground="white" Opacity="0.8"/>
-        <Button Name="optionButton"
-                Click="optionButton_Click"
-                Content="Options" Height="50" Width="334" Canvas.Left="224" Canvas.Top="219"
+        <Button Name="aboutButton"
+                Click="aboutButton_Click"
+                Content="About" Height="50" Width="334" Canvas.Left="224" Canvas.Top="219"
                 BorderThickness="0" FontSize="22" FontWeight="bold" Background="#222" FontFamily="Verdana" Foreground="white" Opacity="0.8"/>
         <Button Name="exitButton"
                 Click="exitButton_Click"

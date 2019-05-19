@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Icon="Resource/puzzle.ico"
         ResizeMode="NoResize"
-        Title="Image storage" Height="400" Width="300" WindowStartupLocation="CenterScreen">
-    <Canvas Background="#222">
-        <ListView Name="imageListView" Background="#222"
+        Title="Change Image" Height="400" Width="300" WindowStartupLocation="CenterScreen">
+    <Canvas Background="Black" Opacity="0.9">
+        <ListView Name="imageListView" Background="Black" Opacity="0.9"
                   SelectionChanged="imageListView_SelectionChanged"
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   ScrollViewer.CanContentScroll="False"

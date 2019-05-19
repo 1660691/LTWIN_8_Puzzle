@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Icon="Resource/puzzle.ico"
-        Title="Option" Height="219.925" Width="300" WindowStartupLocation="CenterScreen">
-    <Canvas Background="#222">
-        <GroupBox Width="272" Height="116" Canvas.Left="8" Canvas.Top="10" Header="Customize level:" Foreground="silver" BorderThickness="0">
+        Title="Customize Level" Height="219.925" Width="300" WindowStartupLocation="CenterScreen">
+    <Canvas Background="black" Opacity="0.9">
+        <GroupBox Width="272" Height="116" Canvas.Left="8" Canvas.Top="10" Header="Choose level:" Foreground="silver" BorderThickness="0">
             <GroupItem>
                 <StackPanel Height="102">
                     <RadioButton Name="easyOption" 
@@ -24,7 +24,7 @@
         <Button Name="OKButton"
                 Click="OKButton_Click" 
                 Content="OK"
-                Background="#222" Foreground="silver" 
+                Background="#222" Foreground="silver" BorderThickness="0"
                 Width="65" Canvas.Top="139" Canvas.Left="112" Height="29"/>
     </Canvas>
 </Window>

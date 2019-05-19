@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Icon="Resource/puzzle.ico"
         ResizeMode="NoResize"
-        Title="8 Puzzle - Play game" Height="554.511" Width="1000" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="Play 8 Puzzle" Height="554.511" Width="1000" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid   >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="525"/>
@@ -28,11 +28,15 @@
                         Margin="10" Background="#222" Foreground="silver" BorderThickness="0">
                     Back
                 </Button>
-                <Button ToolTip="Save game"
+                <Button Name="saveGameButton"
+                        ToolTip="Save game"
+                        Click="saveGameButton_Click"
                         Margin="10" Background="#222" Foreground="silver" BorderThickness="0">
                     Save
                 </Button>
-                <Button ToolTip="How to play"
+                <Button Name="helpButton"
+                        Click="helpButton_Click"
+                        ToolTip="How to play"
                         Margin="10" Background="#222" Foreground="silver" BorderThickness="0">
                     Help
                 </Button>

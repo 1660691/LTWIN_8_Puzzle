@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Windows.Threading;
+using System.IO;
 
 namespace _8_Puzzle
 {
@@ -36,18 +37,32 @@ namespace _8_Puzzle
             }
         }
 
+        List<string> imgTagList;
+        bool checkGameSaved;
+        bool noGameSaved = false;
+        bool isDragging = false;
+        Point lastPositon;
+        int selectedIndex = -1;
+        double _oldLeft, _oldTop;
+        int _lastCurIndex;
         List<Image> imgList;
         const int size = 175;
         static bool[] checker;
         int steps;
+        string level;
         DispatcherTimer timer;
         int min, sec;
 
-        public gamePlayWindow(string level)
+        public gamePlayWindow()
         {
             InitializeComponent();
-            levelValue.Content = level;
-            SetLevel(level);
+        }
+
+        public gamePlayWindow(string _level, bool _noGameSaved)
+        {
+            InitializeComponent();
+            level = _level;
+            noGameSaved = _noGameSaved;
         }
 
         void SetLevel(string level)
@@ -73,18 +88,102 @@ namespace _8_Puzzle
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            cropImage(sampleImage.Source.ToString());
+        {  
+            try
+            {
+                using (System.IO.StreamReader file = new System.IO.StreamReader("gamesaved.txt"))
+                {
+                    if(!string.IsNullOrEmpty(file.ReadToEnd()))
+                    {
+                        checkGameSaved = true;
+                    }
+                    else
+                    {
+                        checkGameSaved = false;
+                    }
 
-            steps = 0;
-            stepsValue.Content = steps.ToString();
+                    file.Close();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Cannot read gamesaved.txt", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
+            if(checkGameSaved)
+            {
+
+                using (System.IO.StreamReader file = new System.IO.StreamReader("gamesaved.txt"))
+                {
+                    sampleImageSource = file.ReadLine();
+
+                    imgTagList = new List<string>();
+                    imgTagList.Add(file.ReadLine());
+                    imgTagList.Add(file.ReadLine());
+                    imgTagList.Add(file.ReadLine());
+                    imgTagList.Add(file.ReadLine());
+                    imgTagList.Add(file.ReadLine());
+                    imgTagList.Add(file.ReadLine());
+                    imgTagList.Add(file.ReadLine());
+                    imgTagList.Add(file.ReadLine());
+                    imgTagList.Add(file.ReadLine());
+
+                    if (!int.TryParse(file.ReadLine(), out min))
+                        return;
+
+                    if (!int.TryParse(file.ReadLine(), out sec))
+                        return;
+
+                    if (!int.TryParse(file.ReadLine(), out steps))
+                        return;
+
+                    level = file.ReadLine();
+               
+                    file.Close();
+                }
+
+                File.WriteAllText("gamesaved.txt", string.Empty);
+
+                string _min, _sec;
+
+                if (min < 10)
+                    _min = "0" + min.ToString();
+                else
+                    _min = min.ToString();
+
+                if (sec < 10)
+                    _sec = "0" + sec.ToString();
+                else
+                    _sec = sec.ToString();
+
+                timeLabel.Content = _min + ":" + _sec;
+
+                cropImage(sampleImageSource);
+            }
+            else
+            {
+                if(noGameSaved == false)
+                {
+                    var mainScreen = new MainWindow();
+                    this.Hide();
+                    mainScreen.ShowDialog();
+                    this.Close();
+                }
+                else
+                {
+                    cropImage(sampleImage.Source.ToString());
+                    SetLevel(level);
+                    steps = 0;
+                }
+
+            }
+
+            levelValue.Content = level;
             timer = new DispatcherTimer();
             timer.Tick += new EventHandler(timer_Tick);
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Start();
-
-
+            stepsValue.Content = steps.ToString();
         }
 
         void cropImage(string src)
@@ -94,11 +193,12 @@ namespace _8_Puzzle
             var height = image.PixelHeight / 3;
 
             board.Children.Clear();
-            imgList = new List<Image>();
-            checker = new bool[8];
 
+            checker = new bool[8];
             for (var i = 0; i < 8; i++)
                 checker[i] = false;
+
+            imgList = new List<Image>();
 
             for (var i = 0; i < 3; i++)
             {
@@ -120,28 +220,63 @@ namespace _8_Puzzle
             var random = new Random();
             var indices = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7 };
 
+            var savedIndexes = new List<int>();
+            if (checkGameSaved)
+            {
+                foreach (var imgTag in imgTagList)
+                {
+                    string[] tag = imgTag.Split(new string[] { "-" }, StringSplitOptions.None);
+
+                    if (tag.Length == 2)
+                    {
+                        savedIndexes.Add(Convert.ToInt32(tag[1]));
+                    }
+                }
+            }
+
             for (var i = 0; i < 3; i++)
             {
                 for (var j = 0; j < 3; j++)
                 {
                     var currentIndex = i * 3 + j;
-                    if (i != 2 || j != 2)
+
+                    if(checkGameSaved)
                     {
-                        var randomIndex = random.Next(indices.Count);
-                        var index = indices[randomIndex];
+                        for (var k = 0; k < savedIndexes.Count; k++)
+                        {
+                            if (savedIndexes[k] == currentIndex)
+                            {
+                                var img = imgList[k];
 
-                        var tag = imgList[index].Tag;
+                                CheckImageIndex(k, currentIndex);
 
-                        imgList[index].Tag = tag.ToString() + "-" + currentIndex.ToString();
+                                img.Tag = img.Tag.ToString() + "-" + currentIndex.ToString();
 
-                        CheckImageIndex(index, currentIndex);
+                                board.Children.Add(img);
 
-                        board.Children.Add(imgList[index]);
+                                Canvas.SetLeft(img, i * size);
+                                Canvas.SetTop(img, j * size);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (i != 2 || j != 2)
+                        {
+                            var randomIndex = random.Next(indices.Count);
+                            var index = indices[randomIndex];
+                            var img = imgList[index];
+                            img.Tag = img.Tag.ToString() + "-" + currentIndex.ToString();
 
-                        Canvas.SetLeft(imgList[index], i * size);
-                        Canvas.SetTop(imgList[index], j * size);
+                            CheckImageIndex(index, currentIndex);
 
-                        indices.RemoveAt(randomIndex);
+                            board.Children.Add(img);
+
+                            Canvas.SetLeft(img, i * size);
+                            Canvas.SetTop(img, j * size);
+
+                            indices.RemoveAt(randomIndex);
+                        }
                     }
                 }
             }
@@ -190,7 +325,6 @@ namespace _8_Puzzle
                 _sec = sec.ToString();
 
             timeLabel.Content = _min + ":" + _sec;
-
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -206,6 +340,7 @@ namespace _8_Puzzle
         {
             var storage = new ImageStorage();
             storage.ShowDialog();
+
             if(storage.DialogResult == true)
             {
                 SampleImageSource = storage.SampleImageSource;
@@ -216,15 +351,8 @@ namespace _8_Puzzle
                 SetLevel(levelValue.Content.ToString());
                 steps = 0;
                 stepsValue.Content = steps.ToString();
-                
             }
         }
-
-        bool isDragging = false;
-        Point lastPositon;
-        int selectedIndex = -1;
-        double _oldLeft, _oldTop;
-        int _lastCurIndex;
 
         private void board_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -258,6 +386,8 @@ namespace _8_Puzzle
                     && (oldTop <= lastPositon.Y && lastPositon.Y <= oldTop + size));
         }
 
+        int emptyIndex;
+
         private void board_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (selectedIndex == -1)
@@ -270,33 +400,41 @@ namespace _8_Puzzle
             var curX = (int)currentPosition.X / size;
             var curY = (int)currentPosition.Y / size;
 
-            var indexToStep =  Convert.ToInt32(curX*3 + curY);
+            var existedIndexes = new List<bool>() { false, false, false, false, false, false, false, false, false };
 
-            List<int> existedIndexes = new List<int>();
-
-            for(var i = 0; i < imgList.Count; i++)
+            for (var i = 0; i < imgList.Count; i++)
             {
                 string[] tag = imgList[i].Tag.ToString().Split(new string[] { "-" }, StringSplitOptions.None);
-                if (tag.Length == 2)
+
+                if(tag.Length == 2)
                 {
-                    existedIndexes.Add(Convert.ToInt32(tag[1]));
+                    var index = Convert.ToInt32(tag[1]);
+                    existedIndexes[index] = true;
                 }
             }
 
-            foreach (var index in existedIndexes)
+            var indexToStep = curX * 3 + curY;
+
+            for(var k = 0; k < existedIndexes.Count; k++)
             {
-                if(indexToStep == index)
+                if (existedIndexes[k] == false)
                 {
-                    check = false;
+                    emptyIndex = k;
                     break;
                 }
-                else
+            }
+
+            if (indexToStep != emptyIndex)
+            {
+                check = false;
+            }
+            else
+            {
+                int top = _lastCurIndex - 1, bottom = _lastCurIndex + 1, left = _lastCurIndex - 3, right = _lastCurIndex + 3;
+
+                if (indexToStep != top && indexToStep != bottom && indexToStep != left && indexToStep != right)
                 {
-                    if (indexToStep % 2 == 0 && _lastCurIndex % 2 == 0 || indexToStep % 2 != 0 && _lastCurIndex % 2 != 0)
-                    {
-                        check = false;
-                        break;
-                    }
+                    check = false;
                 }
             }
 
@@ -314,11 +452,10 @@ namespace _8_Puzzle
                     Canvas.SetLeft(imgList[selectedIndex], i);
                     Canvas.SetTop(imgList[selectedIndex], j);
 
-                    var currentIndex = GetCurrentIndex(imgList[selectedIndex]);
+                    CheckImageIndex(selectedIndex,indexToStep);
 
-                    CheckImageIndex(selectedIndex, currentIndex);
+                    imgList[selectedIndex].Tag = selectedIndex.ToString() + "-" + indexToStep.ToString();
 
-                    imgList[selectedIndex].Tag = selectedIndex.ToString() + "-" + currentIndex.ToString();
                     steps++;
                     stepsValue.Content = steps.ToString();
 
@@ -364,6 +501,34 @@ namespace _8_Puzzle
                 checker[index] = true;
             else
                 checker[index] = false;
+        }
+
+        private void saveGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Save game and exit?", "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                return;
+
+            var file = new System.IO.StreamWriter("gamesaved.txt");
+
+            file.WriteLine(sampleImage.Source);
+
+            foreach (var img in imgList)
+                file.WriteLine(img.Tag);
+
+            file.WriteLine(min);
+            file.WriteLine(sec);
+            file.WriteLine(steps);
+            file.WriteLine(levelValue.Content);
+
+            file.Close();
+            this.Hide();
+            MessageBox.Show("Game saved");
+            this.Close();
+        }
+
+        private void helpButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Using your mouse to hold and move each image cell to the empty cell such as all cells combine to become as the sample image.", "Help", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         bool CheckWinning()
