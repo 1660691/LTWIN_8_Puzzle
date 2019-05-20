@@ -158,6 +158,7 @@ namespace _8_Puzzle
 
                 timeLabel.Content = _min + ":" + _sec;
 
+                sampleImage.Source = new BitmapImage(new Uri(sampleImageSource));
                 cropImage(sampleImageSource);
             }
             else
